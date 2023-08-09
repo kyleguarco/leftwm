@@ -25,6 +25,7 @@ pub enum Command {
     ToggleScratchPad(ScratchPadName),
     ToggleFullScreen,
     ToggleSticky,
+    ToggleMarked,
     GoToTag {
         tag: TagId,
         swap: bool,

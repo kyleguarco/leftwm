@@ -43,6 +43,7 @@ pub struct Window {
     pub handle: WindowHandle,
     pub transient: Option<WindowHandle>,
     visible: bool,
+    marked: bool,
     pub can_resize: bool,
     is_floating: bool,
     pub(crate) must_float: bool,
@@ -76,6 +77,7 @@ impl Window {
             handle: h,
             transient: None,
             visible: false,
+            marked: false,
             can_resize: true,
             is_floating: false,
             must_float: false,
@@ -102,13 +104,26 @@ impl Window {
         }
     }
 
+    /// Prevent hiding the window, even if it's in another tag.
+    ///
+    /// Use a mark if the window might be recorded by some software (e.g OBS, Discord)
+    /// and it needs to be visible.
+    pub fn set_marked(&mut self, value: bool) {
+        self.marked = value;
+    }
+
     pub fn set_visible(&mut self, value: bool) {
         self.visible = value;
     }
 
+    pub fn marked(&self) -> bool {
+        self.marked
+    }
+
     #[must_use]
     pub fn visible(&self) -> bool {
-        self.visible
+        self.marked
+            || self.visible
             || self.r#type == WindowType::Menu
             || self.r#type == WindowType::Splash
             || self.r#type == WindowType::Toolbar

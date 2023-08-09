@@ -70,6 +70,7 @@ fn process_internal<C: Config, SERVER: DisplayServer>(
 
         Command::ToggleFullScreen => toggle_state(state, WindowState::Fullscreen),
         Command::ToggleSticky => toggle_state(state, WindowState::Sticky),
+        Command::ToggleMarked => toggle_marked(state),
 
         Command::SendWindowToTag { window, tag } => move_to_tag(*window, *tag, manager),
         Command::MoveWindowToNextTag { follow } => move_to_tag_relative(manager, *follow, 1),
@@ -230,6 +231,13 @@ fn focus_previous_used_tag(state: &mut State) -> Option<bool> {
         },
     };
     state.goto_tag_handler(*previous_used_tag)
+}
+
+fn toggle_marked(state: &mut State) -> Option<bool> {
+    let window = state.focus_manager.window_mut(&mut state.windows)?;
+    window.set_marked(!window.marked());
+
+    Some(true)
 }
 
 fn toggle_state(state: &mut State, window_state: WindowState) -> Option<bool> {

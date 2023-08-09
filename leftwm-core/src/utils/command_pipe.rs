@@ -171,6 +171,7 @@ fn parse_command(s: &str) -> Result<Command, Box<dyn std::error::Error>> {
         "FloatingToTile" => Ok(Command::FloatingToTile),
         "TileToFloating" => Ok(Command::TileToFloating),
         "ToggleFloating" => Ok(Command::ToggleFloating),
+        "ToggleMarked" => Ok(Command::ToggleMarked),
         // Workspace/Tag
         "GoToTag" => build_go_to_tag(rest),
         "ReturnToLastTag" => Ok(Command::ReturnToLastTag),

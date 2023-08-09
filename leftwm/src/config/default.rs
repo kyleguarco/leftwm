@@ -172,6 +172,13 @@ impl Default for Config {
                 modifier: Some(vec!["modkey".to_owned()].into()),
                 key: "Left".to_owned(),
             },
+            // Mod + Ctrl + x => Mark currently focused window
+            Keybind {
+                command: BaseCommand::ToggleMarked,
+                value: String::default(),
+                modifier: Some(vec!["modkey".to_owned(), "Control".to_owned()].into()),
+                key: "x".to_owned(),
+            },
         ];
 
         // add "goto workspace"
